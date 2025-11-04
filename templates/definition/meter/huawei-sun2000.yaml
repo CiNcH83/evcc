@@ -48,6 +48,10 @@ params:
     help:
       en: Keep AC charging active to charge the storage from other inverters via AC. Prevents stand-by.
       de: AC-Laden bleibt aktiv zum Laden des Speichers aus anderen AC Quellen für Wechselrichterkaskaden. Verhindert Stand-by.
+  - name: watchdog
+    type: duration
+    default: 60s
+    advanced: true
 render: |
   type: custom
   {{- if eq .usage "grid" }}
@@ -163,7 +167,7 @@ render: |
     scale: 0.1
   batterymode:
     source: watchdog
-    timeout: 30s
+    timeout: {{ .watchdog }} # re-write at timeout/2
     reset: 1 # reset watchdog on normal
     set:
       source: switch
