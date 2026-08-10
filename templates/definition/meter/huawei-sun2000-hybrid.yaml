@@ -79,7 +79,7 @@ render: |
   power:
     source: modbus
     {{- include "modbus" . | indent 2 }}
-    connectdelay: 1s
+    connectdelay: 2s
     register:
       address: 37113 # Grid import/export power
       type: holding
@@ -208,7 +208,7 @@ render: |
   power:
     source: modbus
     {{- include "modbus" . | indent 2 }}
-    connectdelay: 1s
+    connectdelay: 2s
     register:
       address: 32064 # Input power DC
       type: holding
@@ -291,7 +291,7 @@ render: |
   power:
     source: modbus
     {{- include "modbus" . | indent 2 }}
-    connectdelay: 1s
+    connectdelay: 2s
     register:
       address: 37765 # overall power
       type: holding
