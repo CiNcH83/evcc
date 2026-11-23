@@ -268,52 +268,6 @@ render: |
       register: 37760
       count: 24
     scale: 0.1
-  dim:
-    source: ifelse
-    if:
-      source: convert
-      convert: bool2int
-      set:
-        source: const
-        value: 0 # Disable
-        set:
-          source: modbus
-          {{- include "modbus" . | indent 8 }}
-          register:
-            address: 47087 # Charge from grid
-            type: writesingle
-            encoding: uint16
-    else:
-      source: convert
-      convert: bool2int
-      set:
-        {{- if .forceaccharging }}
-        source: const
-        value: 1 # Enable
-        set:
-          source: modbus
-          {{- include "modbus" . | indent 8 }}
-          register:
-            address: 47087 # Charge from grid
-            type: writesingle
-            encoding: uint16
-        {{- else }}
-        source: sleep
-        duration: 0s
-        {{- end }}
-  dimmed:
-    source: go
-    in:
-    - name: v
-      type: int
-      config:
-        source: modbus
-        {{- include "modbus" . | indent 6 }}
-        register:
-          address: 47087 # Charge from grid (0=disabled → dimmed, 1=enabled → not dimmed)
-          type: holding
-          decode: uint16
-    script: v == 0
   # the sequence hides the switch, so the modes are declared here
   batterymodes: ["normal", "holddischarge", "charge", "holdcharge", "discharge"]
   batterymode:
